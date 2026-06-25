@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = (import.meta.env.VITE_API_URL || "https://web-production-f4e3d.up.railway.app").replace(/\/+$/, "");
 
 export default function CrawledUrls({ dataSource, onBack }) {
   const [pages, setPages] = useState([]);

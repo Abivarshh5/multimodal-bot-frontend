@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = (import.meta.env.VITE_API_URL || "https://web-production-f4e3d.up.railway.app").replace(/\/+$/, "");
 
 function extractStoreName(url) {
   if (!url) return "Store";
@@ -213,7 +213,8 @@ export default function Chatbot({ store, branding, onClose }) {
 
   function openCamera() {
     console.log("opening camera...");
-    const ws = new WebSocket(import.meta.env.VITE_WS_URL || "ws://localhost:8000/ws");
+    const defaultWsUrl = API.startsWith("https") ? API.replace("https", "wss") + "/ws" : API.replace("http", "ws") + "/ws";
+    const ws = new WebSocket(import.meta.env.VITE_WS_URL || defaultWsUrl);
     wsRef.current = ws;
     let done = false;
 

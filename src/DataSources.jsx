@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Chatbot from "./Chatbot";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = "https://web-production-f4e3d.up.railway.app";
 
 export default function DataSources({ onAddStore, onSelect }) {
   const [sources, setSources] = useState([]);
