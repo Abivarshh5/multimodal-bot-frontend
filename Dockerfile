@@ -14,9 +14,10 @@ RUN npm ci
 # Copy the rest of the frontend source code
 COPY . .
 
-# Accept VITE_API_URL as a build argument and set it as an environment variable
+# Accept VITE_API_URL as a build argument with a production default
 # This ensures Vite embeds the correct API URL during the production build step
-ARG VITE_API_URL
+# The default points to the Railway backend; override via Railway Variables if needed
+ARG VITE_API_URL=https://multimodal-bot-backend-production.up.railway.app
 ENV VITE_API_URL=${VITE_API_URL}
 
 # Build the Vite application for production
