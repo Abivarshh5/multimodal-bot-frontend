@@ -27,18 +27,18 @@ RUN npm run build
 # ==========================================
 FROM nginx:alpine
 
-# Default Railway port configuration fallback
-ENV PORT=80
-EXPOSE 80
+# Use fixed port 8080 to perfectly align with Railway's default edge proxy routing
+ENV PORT=8080
+EXPOSE 8080
 
 # Copy compiled production assets from the builder stage to Nginx serve directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Create an Nginx configuration template supporting Single Page Application (SPA) routing
-# and dynamically binding to the Railway $PORT environment variable at runtime
+# Create an Nginx configuration supporting Single Page Application (SPA) routing
+# listening explicitly on port 8080 with wildcard server_name
 RUN echo 'server { \
-    listen ${PORT}; \
-    server_name localhost; \
+    listen 8080 default_server; \
+    server_name _; \
     location / { \
         root /usr/share/nginx/html; \
         index index.html index.htm; \
@@ -48,7 +48,7 @@ RUN echo 'server { \
     location = /50x.html { \
         root /usr/share/nginx/html; \
     } \
-}' > /etc/nginx/conf.d/default.conf.template
+}' > /etc/nginx/conf.d/default.conf
 
-# Replace the ${PORT} variable in the template at runtime and start Nginx
-CMD ["sh", "-c", "envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+# Start Nginx directly
+CMD ["nginx", "-g", "daemon off;"]
