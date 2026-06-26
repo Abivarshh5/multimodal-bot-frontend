@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const API = (import.meta.env.VITE_API_URL || "https://web-production-f4e3d.up.railway.app").replace(/\/+$/, "");
+const API = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/+$/, "");
 
 function extractStoreName(url) {
   if (!url) return "Store";
