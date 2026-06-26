@@ -1,5 +1,0 @@
-# Node dependencies & build output
-node_modules/
-dist/
-build/
-
